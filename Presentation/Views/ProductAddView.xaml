@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Presentation.Views.ProductAddView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation.Views"
+             
+             xmlns:viewmodels="clr-namespace:Presentation.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProductAddViewModel}"
+             
+             mc:Ignorable="d" 
+             Background="LightGray"
+             d:DesignHeight="500" d:DesignWidth="690">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="5 0 0 0" Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" TextWrapping="Wrap" />
+
+        <TextBlock Grid.Row="1" Margin="5 5 0 15" VerticalAlignment="Center" Text="{Binding Title, FallbackValue=Ny Produkt}" FontWeight="Bold" FontSize="18"  />
+
+        <StackPanel Grid.Row="2">
+            <StackPanel Margin="0 0 0 10">
+                <Label Content="Namn" />
+                <TextBox Text="{Binding ProductData.Name}" Margin="5 0 5 0" />
+            </StackPanel>
+
+            <StackPanel Margin="0 0 0 10">
+                <Label Content="Pris (SEK)" />
+                <TextBox Text="{Binding ProductData.Price, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" Margin="5 0 5 0" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 6 0">
+                <Button Command="{Binding CancelCommand}" Content="Tillbaka" Width="65" Height="25" Margin="0,0,10,0" Padding="5 5" Background="LightBlue" FontSize="10" FontWeight="Bold"/>
+                <Button Command="{Binding SaveCommand}" Content="Spara" Width="65" Height="25" Padding="5 5" Background="LightBlue" FontSize="10" FontWeight="Bold"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,75 @@
+using ApplicationLayer.DTOs;
+using ApplicationLayer.Interfaces;
+using ApplicationLayer.Results;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Domain.Entities;
+using Presentation.Interfaces;
+
+namespace Presentation.ViewModels;
+
+public partial class ProductAddViewModel(IViewNavigationService viewNavigationService, IProductService productService) : StatusViewModelBase
+{
+    private readonly IViewNavigationService _viewNavigationService = viewNavigationService;
+    private readonly IProductService _productService = productService;
+
+    [ObservableProperty]
+    private ProductCreateRequest _productData = new();
+
+    [ObservableProperty]
+    private string _title = "Ny Produkt";
+
+    [RelayCommand]
+    private async Task Save(CancellationToken ct) 
+    {
+        try
+        {
+            List<string> errors = [];
+
+            if (string.IsNullOrWhiteSpace(ProductData.Name))
+                errors.Add("Namn måste anges.");
+
+            if (ProductData.Price is null)
+                errors.Add("Pris måste anges.");
+            else if (ProductData.Price <= 0)
+                errors.Add("Pris måste vara större än 0.");
+
+            if (errors.Count > 0)
+            {
+                SetStatus(string.Join("\n", errors), "red");
+                return;
+            }
+
+            ServiceResult<Product> saveResult = await _productService.SaveProductAsync(ProductData, ct);
+
+            if (!saveResult.Succeeded)
+            {
+                SetStatus(saveResult.ErrorMessage ?? "Produkten kunde inte sparas.", "red");
+                return;
+            }
+
+            SetStatus("Produkten har sparats.", "green");
+
+            await Task.Delay(1000, ct);
+
+            await _viewNavigationService.NavigateToAsync<ProductListViewModel>(viewmodel => viewmodel.PopulateProductListAsync(ct));
+        }
+        catch (OperationCanceledException) 
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Ett oväntat fel uppstod: {ex.Message}", "red");
+        }
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        _viewNavigationService.NavigateTo<ProductListViewModel>();
+    }
+}
+
+
+
