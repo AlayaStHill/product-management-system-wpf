@@ -1,32 +1,36 @@
-Product Management WPF App 
+Product Management – WPF Application
+Sammanfattning
+Detta projekt är en WPF-applikation för produkt­hantering, utvecklad i C# och .NET som en del av min utbildning till Webbutvecklare .NET.
+Applikationen är uppbyggd enligt MVVM och en tydligt lagerindelad arkitektur, med fokus på struktur, testbarhet och tydlig ansvarsfördelning mellan lager.
 
-This is a WPF application built as a school project using C# 12 and .NET 9.  
-The application follows MVVM and a layered architecture (Domain, Application, Infrastructure, Presentation).  
+Funktionalitet
+- Skapa, redigera, ta bort och lista produkter (CRUD)
+- Produkter har koppling till Category och Manufacturer
+- Validering av indata och dubblettkontroller
+- Navigering mellan vyer (produktlista, skapa, redigera)
+- Persistens till JSON-filer
 
-It allows you to manage products with categories and manufacturers,  
-with features for creating, editing, deleting, validating, and saving data to JSON.  
-Unit tests are written with xUnit for all core functionality (except ReadAsync, as instructed).  
+Arkitektur (översikt)
+- Projektet är uppdelat i följande lager:
+- Domain – Domänentiteter, interfaces och gemensam logik
+- ApplicationLayer – Applikationstjänster, DTO:er och affärslogik
+- Infrastructure – JSON-baserad repository-implementation
+- Presentation – WPF-vyer, ViewModels och navigation (MVVM)
 
-Features  
-- Navigate between product list, product create and edit views 
-- Create, update, delete and list products 
-- Products include Category and Manufacturer (separate entities) 
-- Prevents duplicate product names and empty products 
-- Data is stored in JSON files 
-- Uses Service Pattern with interfaces and repository abstraction to separate logic from data access 
-- Unit tests with xUnit  
+Applikationen använder Dependency Injection via Generic Host, och ViewModels får sina beroenden injicerade via DI.
 
-Project Structure  
-- Domain – Entities, interfaces, results and extensions 
-- ApplicationLayer – Services, DTOs, validation, factories 
-- Infrastructure – JSON repository implementation 
-- Presentation – WPF views (MVVM) and navigation 
-- Tests – Unit tests with mocks for services, and repository tests with temporary files.  
+Asynkronitet & robusthet
+- Asynkrona operationer med stöd för CancellationToken
+- Kontrollerad laddning av data för att undvika inkonsekventa UI-tillstånd
+- Enhetlig hantering av resultat och fel via gemensamma result-objekt
 
-Requirements Fulfilled  
-- Two views with navigation 
-- CRUD operations for products 
-- Validation and duplicate checks 
-- JSON persistence with load and save 
-- Unit tests for all functionality (except ReadAsync, as instructed) 
-- Git branching workflow 
+Tester
+Projektet innehåller enhetstester skrivna med xUnit och Moq, med fokus på affärslogik i applikationslagret. Repository-beroenden mockas för att möjliggöra isolerade tester.
+
+Teknik
+- C#
+- .NET
+- WPF
+- MVVM
+- xUnit
+- Git & GitHub
