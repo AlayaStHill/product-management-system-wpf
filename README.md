@@ -11,13 +11,13 @@ Applikationen är uppbyggd enligt MVVM och en tydligt lagerindelad arkitektur, m
 - Persistens till JSON-filer
   
 ## Screenshots
-**Product list**
+### Product list
 ![Product list](screenshots/product-list.png)
 
-**Add product**
+### Add product
 ![Add product](screenshots/add-product.png)
 
-**Edit product**
+### Edit product
 ![Edit product](screenshots/edit-product.png)
 
 ## Arkitektur (översikt)
